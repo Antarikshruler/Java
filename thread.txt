@@ -1,0 +1,252 @@
+PRODUCER
+package thread;
+
+public class Q {
+int n;
+boolean valueset=false;
+synchronized int get()
+{
+	while(!valueset)
+	{
+		try
+		{
+			wait();}
+			catch(InterruptedException e) {}
+		}
+	System.out.println("Got: "+n);
+	valueset=false;
+	notify();
+	return n;
+	}
+synchronized void put(int n)
+{
+	while(valueset)
+	{
+		try
+		{
+			wait();
+		}catch(InterruptedException e)
+		{}
+		this.n=n;
+		valueset=true;
+		System.out.println("Put: "+n);
+		notify();
+	}
+}
+}
+package thread;
+
+public class Producer implements Runnable {
+Q q;
+Producer(Q q)
+{
+	this.q=q;
+	new Thread(this,"Producer").start();
+}
+@Override
+public void run() {
+	// TODO Auto-generated method stub
+	int i=0;
+	while(true)
+	{
+		q.put(i++);
+	}
+}
+
+}
+package thread;
+
+public class Consumer implements Runnable {
+Q q;
+Consumer(Q q)
+{
+	this.q=q;
+	new Thread(this,"Consumer").start();
+}
+@Override
+public void run() {
+	// TODO Auto-generated method stub
+	while(true)
+	{
+		q.get();
+	}
+}
+
+}
+package thread;
+
+public class PCFIxed {
+
+	public static void main(String args[])
+	{
+		// TODO Auto-generated method stub
+Q q=new Q();
+new Producer(q);
+new Consumer(q);
+
+System.out.println("what");
+}}
+
+SYNCHONIZED
+package thread;
+
+public class Synch {
+public static void main(String args[])
+{
+	Callme target =new Callme();
+	Caller ob1=new Caller(target,"Hello");
+	Caller ob2=new Caller(target,"World");
+	try
+	{
+		ob1.t.join();
+		ob2.t.join();
+	}
+	catch(InterruptedException e) {}
+}
+}
+package thread;
+
+public class Caller implements Runnable {
+
+	String msg;
+	Callme target;
+	Thread t;
+	public Caller(Callme targ,String s)
+	{
+		target=targ;
+		msg=s;
+		t=new Thread(this);
+		t.start();
+	}
+	public void run ()
+	{
+		target.call(msg);
+	}
+	
+}
+package thread;
+
+public class Callme {
+synchronized void call(String msg) {
+	System.out.println("["+msg);
+	try
+	{
+		Thread.sleep(1000);
+	}
+	catch(InterruptedException e)
+	{
+		System.out.println("Interruted");
+	}
+	System.out.println("]");
+}
+}
+
+ALIVEJOIN
+package thread;
+
+public class AliveJoin extends Thread{
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+AliveJoin t1=new AliveJoin();
+AliveJoin t2=new AliveJoin();
+t1.start();
+try
+{
+	t1.join();
+}catch(InterruptedException e)
+{}
+t2.start();
+		
+		//threadc.setPrioroty(Thread.MAX_PRIOPITY); threadq.getPriority();
+	}
+	public void run() 
+	{
+		System.out.println("r1");
+		try
+		{
+			Thread.sleep(5000);
+			
+		}
+		catch(InterruptedException e)
+		{
+			System.out.println("r2");
+		}
+	}
+}
+
+TEST
+package thread;
+
+//public class NewThread implements Runnable {
+//NewThread()
+//{
+//Thread t=new Thread(this,"Sec Thread");
+//System.out.println("Child: "+t);
+//t.start();
+//}
+//	@Override
+//	public void run() {
+//		// TODO Auto-generated method stub
+//		
+//		try {
+//			for(int i=5;i>0;i--)
+//			{
+//				System.out.println("Child Thread: "+i);
+//				Thread.sleep(500);
+//			}
+//		}
+//		catch(InterruptedException e)
+//		{
+//			System.out.println("Child thread interrupted");
+//		}
+//		System.out.println("Exiting child thread");
+//	}
+//
+//}
+class NewThread extends Thread
+{
+	NewThread()
+	{
+		super("Child Thread");
+		System.out.println("Child: "+this);
+		start();
+	}
+	public void run()
+	{
+		try {
+			for(int i=5;i>0;i--)
+			{
+				System.out.println("Child Thread: "+i);
+				Thread.sleep(500);
+			}
+		}
+			catch(InterruptedException e)
+			{
+				System.out.println("Child thread interrupted");
+		}
+			System.out.println("Exiting child thread");
+		}
+}
+package thread;
+
+public class ThreadDemo {
+public static void main(String args[])
+{
+	new NewThread();
+	try
+	{
+		for(int i=5;i>0;i--)
+		{
+			System.out.println("Main: "+i);
+			Thread.sleep(1000);
+		}
+	}
+	catch(InterruptedException e)
+	{
+		System.out.println("Main thread interrupted");
+	}
+	System.out.println("Main thread over");
+}
+}
+

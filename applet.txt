@@ -1,0 +1,263 @@
+ADAPTER
+package applets;
+
+import java.applet.Applet;
+import java.awt.event.MouseAdapter;
+
+public class An extends Applet{
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public void init()
+	{
+		addMouseListener(new MouseAdapter() {
+			@SuppressWarnings("unused")
+			public void mousePressed(MouseEvent me) {
+				showStatus("Mouse Pressed");
+			}
+		});
+	}
+}
+
+BUTTON
+package applets;
+
+import java.applet.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class ButtonEvent extends Applet implements ActionListener {
+String str="";
+public void init()
+{
+	Button button1=new Button("Ok");
+	Button button2=new Button("Cancel");
+	add(button1);
+	add(button2);
+	button1.addActionListener(this);
+	button2.addActionListener(this);
+}
+public void paint(Graphics g)
+{
+	g.drawString(str, 20, 20);
+}
+	@Override
+	public void actionPerformed(ActionEvent ae) {
+		// TODO Auto-generated method stub
+		String action=ae.getActionCommand();
+		if(action.equals("Ok"))
+			str="Ok pressed";
+		if(action.equals("Cancel"))
+			str="Cancel pressed";
+		repaint();
+	}
+}
+
+CALCULATOR
+package applets;
+
+import java.applet.Applet;
+import java.awt.Button;
+import java.awt.Graphics;
+import java.awt.Label;
+import java.awt.TextField;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class Calculator extends Applet implements ActionListener {
+	String str="";
+	Label l1,l2,l3;
+	TextField t1,t2,t3;
+	Button add,sub,mul,div;
+	
+	public void init()
+	{
+		l1=new Label("Enter 1st number:");
+		add(l1);
+		t1=new TextField(10);
+		add(t1);
+		l2=new Label("Enter 2nd number:");
+		add(l2);
+		t2=new TextField(10);
+		add(t2);
+		l3=new Label("Result:");
+		add(l3);
+		t3=new TextField(10);
+		add(t3);
+		
+		add=new Button("+");
+		sub=new Button("-");
+		mul=new Button("*");
+		div=new Button("/");
+		
+		add(add);
+		add(sub);
+		add(mul);
+		add(div);
+		
+		add.addActionListener(this);
+		sub.addActionListener(this);
+		mul.addActionListener(this);
+		div.addActionListener(this);
+		
+	}
+	
+	public void paint(Graphics g) 
+	{
+		g.drawString(str,10,30);
+	}
+	
+	@Override
+	public void actionPerformed(ActionEvent me) {
+		// TODO Auto-generated method stub
+		int res=0;
+		String action=me.getActionCommand();
+		if(action.equals("+"))
+		{
+			res=Integer.parseInt(t1.getText())+Integer.parseInt(t2.getText());
+			t3.setText(String.valueOf(res));
+		}
+		if(action.equals("-"))
+		{
+			res=Integer.parseInt(t1.getText())-Integer.parseInt(t2.getText());
+			t3.setText(String.valueOf(res));
+		}
+		if(action.equals("*"))
+		{
+			res=Integer.parseInt(t1.getText())*Integer.parseInt(t2.getText());
+			t3.setText(String.valueOf(res));
+		}
+		if(action.equals("/"))
+		{
+			res=Integer.parseInt(t1.getText())/Integer.parseInt(t2.getText());
+			t3.setText(String.valueOf(res));
+		}
+	}
+}
+
+KEYBOARD
+package applets;
+
+import java.applet.Applet;
+import java.awt.Graphics;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
+public class KeyboardEvent extends Applet implements KeyListener{
+	
+String msg="";
+int x=0,y=10;
+
+public void init()
+{
+	addKeyListener(this);
+}
+	@Override
+	public void keyPressed(KeyEvent ke) {
+		// TODO Auto-generated method stub
+		showStatus("Key Down");
+	}
+
+	@Override
+	public void keyReleased(KeyEvent ke) {
+		// TODO Auto-generated method stub
+		showStatus("Key Up");
+	}
+
+	@Override
+	public void keyTyped(KeyEvent ke) {
+		// TODO Auto-generated method stub
+		msg+=ke.getKeyChar();
+		repaint();
+	}
+public void paint(Graphics g)
+{
+	g.drawString(msg,x,y);
+}
+}
+
+MOUSEEVENT
+package applets; 
+
+import java.awt.*;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
+import java.applet.*;
+
+public class MouseEvent extends Applet implements MouseMotionListener, MouseListener  {
+
+	String str="";
+	int x=0,y=0;
+	public void init()
+	{
+		addMouseMotionListener(this);
+		addMouseListener(this);
+	}
+	@Override
+	public void mouseClicked(java.awt.event.MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		x=0;
+		y=10;
+		str="Mouse Clicked";
+		repaint();
+	}
+
+	@Override
+	public void mouseEntered(java.awt.event.MouseEvent me) {
+		// TODO Auto-generated method stub
+		x=0;
+		y=10;
+		str="Mouse Entered";
+		repaint();
+	}
+
+	@Override
+	public void mouseExited(java.awt.event.MouseEvent me) {
+		// TODO Auto-generated method stub
+		x=0;
+		y=10;
+		str="Mouse Exited";
+		repaint();
+	}
+
+	@Override
+	public void mousePressed(java.awt.event.MouseEvent me) {
+		// TODO Auto-generated method stub
+		x=me.getX();
+		y=me.getY();
+		str="Down";
+		repaint();
+	}
+
+	@Override
+	public void mouseReleased(java.awt.event.MouseEvent me) {
+		// TODO Auto-generated method stub
+		x=me.getX();
+		y=me.getY();
+		str="Up";
+		repaint();
+	}
+
+	@Override
+	public void mouseDragged(java.awt.event.MouseEvent me) {
+		// TODO Auto-generated method stub
+		showStatus("Dragging mouse at "+me.getX()+" and "+me.getY());
+	}
+
+	@Override
+	public void mouseMoved(java.awt.event.MouseEvent me) {
+		// TODO Auto-generated method stub
+		showStatus("Moving mouse at "+me.getX()+" and "+me.getY());
+	}
+	public void paint(Graphics g) {
+		g.drawString(str, x, y);
+	}
+
+}
+
+
+

@@ -1,0 +1,75 @@
+USER
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<form action="first.jsp">
+<input type="text" name="user">
+<input type="text" name="password">
+<input type="submit" value="submit">
+</form>
+</body>
+</html>
+
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<%! String user;
+String password;
+%>
+<% user=request.getParameter("user");
+password=request.getParameter("password");
+if(user==null || password==null){%>
+Invalid Parameter 
+<%} if(password.equals("correct")){ %>
+ Welcome <%=user %>
+<%}else{ %>
+Invalid password
+<% }%>
+</body>
+</html>
+
+PALIN
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<form action="palinjsp.jsp">
+<input type="text" name="palin">
+<input type="submit" value="submit">
+</form>
+</body>
+</html>
+
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<%! String palin;
+String reverse="";%>
+<% palin=request.getParameter("palin");
+reverse=new StringBuilder(palin).reverse().toString();
+if(palin.equals(reverse))
+	out.println("Palindrome");
+else
+	out.println("Not Palindrome");
+%>
+</body>
+</html>

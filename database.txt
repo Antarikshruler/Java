@@ -1,0 +1,97 @@
+package applets;
+
+import java.sql.*;
+
+public class database1 {
+public static void main(String args[]) {
+	
+	Connection conn=null;
+	try
+	{
+		Class.forName("com.mysql.jdbc.Driver");
+		conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/person","root","");
+		//String query="select * from student";
+		//String query1="update student set name='yoyo' where name='Antariksh'";
+		Statement stmt=conn.createStatement();
+		//String query2="update student set name=? where usn=?";
+		String query3="insert into student(name,usn) values(?,?)";
+		PreparedStatement ps=null;
+		/*  create procedure getStudName(STUD_ID IN VARCHAR, STUDENT_NAME OUT VARCHAR) AS 
+		BEGIN
+		SELECT name INTO STUDENT_NAME
+		FROM Student
+		WHere ID=STUD_ID;
+		END;
+		
+		String query4="{CALL getSTudName(?,?)}";
+		CallableStatement cs=null;
+		cs=conn.prepareCall(query4);
+		cs.setString(1,"1mssj");
+		cs.registerOutParameter(2,Types.VARCHAR);
+		cs.execute();
+		String name=cs.getString(2);
+		
+		con.setAutoCommit(false);
+		con.commit();
+		conn.rollback(); in exception
+		con.setAutoCommit(false);
+		Savepoint sp1=con.setSavepoint();
+		con.rollback(sp1);
+		con.releaseSavepoint(sp1);
+		con.commit();
+		
+		stmt.addBatch(qry1);
+		stmt.addBatch(qry2);
+		stmt.executeBatch();
+		stmt.clearBatch();
+		con.commit();0
+		
+		*/
+	//	Statement stmt2=conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
+		// rs.updateString("A","B");
+		//rs.updateString(1,"A");
+		//rs.updateRow();
+		//if(rs.getString("name").equals("PQR"))
+		//rs.deleteRow();
+		ps=conn.prepareStatement(query3);
+		ps.setString(1, "yo5");
+		ps.setString(2, "1MS15CS022");
+		ps.execute();
+		//int row=stmt.executeUpdate(query1);
+		//System.out.println(row);
+		//ResultSet rs=stmt.executeQuery(query);
+		String f1,f2;
+		//while(rs.next())
+		//{
+		//	f1=rs.getString("name"); //rs.getString(1);
+		//	f2=rs.getString(2);
+	//		System.out.println(f1+"     "+f2);
+		//}
+	}
+	catch(ClassNotFoundException e)
+	{
+		e.printStackTrace();
+	}
+	catch(SQLException e)
+	{
+		e.printStackTrace();
+	}
+	catch(Exception e)
+	{
+		e.printStackTrace();
+	}
+	finally
+	{
+		try
+		{
+	
+			if(conn!=null)
+				conn.close();
+		}
+		catch(Exception e) 
+		{
+			
+		}
+	}
+}
+}
